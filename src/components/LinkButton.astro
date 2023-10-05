@@ -1,0 +1,19 @@
+---
+interface Props {
+	link:string,
+    placeholder :string,
+    alt?:string
+
+}
+const {link, placeholder,alt } = Astro.props;
+---
+
+<a href={link}>{placeholder}</a>
+
+<style>
+
+    a{
+        padding: 0.5rem 1rem;
+        
+    }
+</style>

@@ -1,0 +1,40 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout {...post.data}>
+	<main>
+		<section>
+			<h1>{post.data.title}</h1>
+			<Image
+				src={post.data.heroImage as string}
+				alt={post.data.title}
+				width={900}
+				height={(900 * 9) / 16}
+			/>
+		</section>
+		<section>
+			<Content />
+		</section>
+	</main>
+</Layout>
+
+<style>
+	img {
+		border-radius: 8px;
+	}
+</style>
